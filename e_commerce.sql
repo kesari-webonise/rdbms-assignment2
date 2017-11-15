@@ -36,7 +36,6 @@ CREATE TABLE `carts` (
 
 LOCK TABLES `carts` WRITE;
 /*!40000 ALTER TABLE `carts` DISABLE KEYS */;
-INSERT INTO `carts` VALUES (1,3,'2017-11-14','2017-11-14'),(6,4,'2017-11-14','2017-11-14');
 /*!40000 ALTER TABLE `carts` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -121,7 +120,7 @@ CREATE TABLE `orders` (
   `created_date` date NOT NULL,
   `updated_date` date NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -130,7 +129,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (1,1,'2017-11-14','dispatched',2400.00,'2017-11-17','2017-11-14','2017-11-14');
+INSERT INTO `orders` VALUES (1,2,'2017-11-15','dispatched',2400.00,'2017-11-18','2017-11-15','2017-11-15'),(2,2,'2017-10-02','d',10.00,'2017-11-15','2017-11-15','2017-11-15');
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -161,7 +160,7 @@ CREATE TABLE `payments` (
 
 LOCK TABLES `payments` WRITE;
 /*!40000 ALTER TABLE `payments` DISABLE KEYS */;
-INSERT INTO `payments` VALUES (1,1,'credit card',50.00,'2017-11-14','done','2017-11-14','2017-11-14',2350.00);
+INSERT INTO `payments` VALUES (1,1,'credit card',50.00,'2017-11-15','done','2017-11-15','2017-11-15',2350.00);
 /*!40000 ALTER TABLE `payments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -268,7 +267,7 @@ UNLOCK TABLES;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
-/*!50001 VIEW `monthly_report` AS select `orders`.`id` AS `Order id`,`orders`.`order_date` AS `Order date`,`products`.`product_name` AS `Product name`,`order_history`.`product_quantity` AS `Quantity`,`variants`.`price` AS `Per unit price`,`payments`.`checkout_cost` AS `Final order cost`,`users`.`name` AS `User name`,`users`.`email` AS `Email` from (((((`orders` join `order_history`) join `variants`) join `products`) join `users`) join `payments`) where ((`orders`.`id` = `order_history`.`order_id`) and (`order_history`.`variant_id` = `variants`.`id`) and (`users`.`id` = `orders`.`user_id`) and (`orders`.`id` = `payments`.`order_id`) and (`variants`.`product_id` = `products`.`id`)) */;
+/*!50001 VIEW `monthly_report` AS select `orders`.`id` AS `Order id`,`orders`.`order_date` AS `Order date`,`products`.`product_name` AS `Product name`,`order_history`.`product_quantity` AS `Quantity`,`variants`.`price` AS `Per unit price`,`payments`.`checkout_cost` AS `Final order cost`,`users`.`name` AS `User name`,`users`.`email` AS `Email` from (((((`orders` join `order_history`) join `variants`) join `products`) join `users`) join `payments`) where ((`orders`.`id` = `order_history`.`order_id`) and (`order_history`.`variant_id` = `variants`.`id`) and (`users`.`id` = `orders`.`user_id`) and (`orders`.`id` = `payments`.`order_id`) and (`variants`.`product_id` = `products`.`id`) and (`orders`.`order_date` between date_format(curdate(),'%Y-%m-01') and curdate())) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
@@ -301,4 +300,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-11-14 20:54:59
+-- Dump completed on 2017-11-15 10:54:02
